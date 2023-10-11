@@ -3,11 +3,11 @@
     <div class="container">
         <h2 class="text-center mt-5">Todo App</h2>
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <input v-model="task" type="text" class="form-control" placeholder="Do something..">
             </div>
-            <div class="col-md-1 w-100">
-                <button class="btn btn-warning rounded-0 btn-block" @click="submitTask">ADD TO LIST</button>
+            <div class="col-md-1 w-100 ">
+                <button class="btn btn-warning rounded-0 btn-block" @click="submitTask">Add New Task</button>
             </div>
         </div>
         <table class="table table-bordered mt-3">
@@ -43,7 +43,8 @@
                         <div v-if="!task.editing" class="text-center" @click="editTodo(task, index)">
                             <span class="fa-regular fa-pen-to-square"></span>
                         </div>
-                        <div v-else="task.editing" @click="doneEdit(task)" class="text-center"><span class="fa-solid fa-check"></span></div>
+                        <div v-else="task.editing" @click="doneEdit(task)" class="text-center"><span
+                                class="fa-solid fa-check"></span></div>
                     </td>
                     <td>
                         <div class="text-center" @click="deleteTask(index)">
