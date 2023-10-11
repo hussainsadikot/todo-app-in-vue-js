@@ -1,18 +1,14 @@
 
 <template >
     <div class="container">
-        <h2 class="text-center mt-5">Todo App</h2>
-        <div class="row">
-            <div class="col-md-9">
-                <input v-model="task" type="text" class="form-control" placeholder="Do something..">
-            </div>
-            <div class="col-md-1 w-100 ">
-                <button class="btn btn-warning rounded-0 btn-block" @click="submitTask">Add New Task</button>
-            </div>
+        <h2 class="text-center mt-5 ">Todo App</h2>
+        <div class="input-container">
+            <input v-model="task" type="text" class="form-control " placeholder="Do something..">
+            <button type="button" class="add-button" @click="submitTask">Add New Task</button>
         </div>
         <table class="table table-bordered mt-3">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th scope="col">Task</th>
                     <th scope="col">Status</th>
                     <th scope="col" class="text-center">#Edit</th>
@@ -130,6 +126,28 @@ export default {
 
 </script>
 <style scoped>
+.input-container {
+  display: flex;
+  align-items: center; /* Vertically align content */
+  gap: 10px; /* Add a 10px space between elements */
+  
+}
+
+.add-button {
+  padding: 5px 10px; /* Adjust the padding to control the button size */
+  background-color: #007bff; /* Button background color */
+  height: inherit;
+  color: #fff; /* Button text color */
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.add-button:hover {
+  background-color: #0056b3; /* Button background color on hover */
+}
 .pointer {
     cursor: pointer;
 }
@@ -158,5 +176,10 @@ export default {
     border: 1px solid #ccc;
     outline: none;
 
+}
+
+.btn-sm {
+    height: inherit;
+    /* Match the height to the parent (input) */
 }
 </style>
