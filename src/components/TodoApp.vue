@@ -1,13 +1,13 @@
 
-<template style="width:100%">
-    <div class="container" style="width: 100%;">
+<template >
+    <div class="container">
         <h2 class="text-center mt-5">Todo App</h2>
         <div class="row">
-            <div class="col-md-8">
-                <input v-model="task" type="text" name="todo" class="form-control" placeholder="Do something..">
+            <div class="col-md-10">
+                <input v-model="task" type="text" class="form-control" placeholder="Do something..">
             </div>
-            <div class="col-md-4">
-                <button class="btn btn-warning rounded-0 btn-block" @click="submitTask">SUBMIT</button>
+            <div class="col-md-1 w-100">
+                <button class="btn btn-warning rounded-0 btn-block" @click="submitTask">ADD TO LIST</button>
             </div>
         </div>
         <table class="table table-bordered mt-3">
@@ -20,20 +20,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(task, index) in tasks" :key="index">
-                    <td><span :class="{ 'finished': task.status === 'finished' }"
-                        >{{ task.name }}</span></td>
+                <tr v-for="(task, index) in tasks" :key="task.id">
+                    <td>
+                        <div class="todo-item-left">
+                            <div v-if="!task.editing" class="todo-item-label">
+                                <span :class="{ 'finished': task.status === 'finished' }">{{ task.name }}
+                                </span>
+                            </div>
+                            <input v-else="task.editing" v-model="task.name" @keyup.enter="doneEdit(task)"
+                                class="todo-item-edit" type="text" id="">
+                        </div>
+                    </td>
                     <td style="width: 120px;">
                         <span @click="changeStatus(index)" class="pointer" :class="{
                             'text-danger': task.status === 'to-do',
                             'text-warning': task.status === 'in-progress',
                             'text-success': task.status === 'finished',
-                        }">{{ task.status }}</span>
+                        }">{{ task.status }}
+                        </span>
                     </td>
                     <td>
-                        <div class="text-center" @click="editTask(index)">
-                            <span class="fa fa-pen"></span>
+                        <div v-if="!task.editing" class="text-center" @click="editTodo(task, index)">
+                            <span class="fa-regular fa-pen-to-square"></span>
                         </div>
+                        <div v-else="task.editing" @click="doneEdit(task)" class="text-center"><span class="fa-solid fa-check"></span></div>
                     </td>
                     <td>
                         <div class="text-center" @click="deleteTask(index)">
@@ -59,12 +69,16 @@ export default {
             availableStatuses: ['to-do', 'in-progress', 'finished'],
             tasks: [
                 {
+                    id: 1,
                     name: 'Read book',
-                    status: 'to-do'
+                    status: 'to-do',
+                    editing: false,
                 },
                 {
+                    id: 2,
                     name: 'Arrange book',
-                    status: 'in-progress'
+                    status: 'in-progress',
+                    editing: false,
                 },
             ]
         }
@@ -88,10 +102,18 @@ export default {
         deleteTask(index) {
             this.tasks.splice(index, 1)
         },
-        editTask(index) {
+        editTask(task, index) {
+
+            task.editing = true;
             // console.log(this.tasks[index].name)
             this.task = this.tasks[index].name;
-            this.editedTask = index
+            // this.editedTask = index
+        },
+        editTodo(task) {
+            task.editing = true
+        },
+        doneEdit(task) {
+            task.editing = false
         },
 
         changeStatus(index) {
@@ -115,10 +137,25 @@ export default {
     text-decoration: line-through;
 }
 
-@media (min-width: 1024px) {
-    .container {
-        max-width: 100%;
-        /* Reset max-width for screens wider than 1023px */
-    }
+.todo-item-left {
+    display: flex;
+    align-items: center;
+}
+
+.todo-item-label {
+    padding: 10px;
+    border: 1px solid white;
+    margin-left: 12px;
+}
+
+.todo-item-edit {
+    font-size: 24px;
+
+    margin-left: 12px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+
 }
 </style>
